@@ -1,7 +1,21 @@
 import React from 'react';
-import logo from "../logo.svg";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { useQuery, gql } from "@apollo/client";
+import logo from "../logo.svg";
+
+// Declare styles
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    padding: '1rem',
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "3rem",
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "4rem",
+    },
+  },
+}));
 
 interface UsernameData {
   viewer: {
@@ -18,19 +32,28 @@ const GET_USERNAME = gql`
 `;
 
 const Home: React.FC = () => {
+  const classes = useStyles();
   const { loading, data } = useQuery<UsernameData>(GET_USERNAME);
-  console.log(data);
+  // const data = {
+  //   viewer: {
+  //     login: 'JR'
+  //   }
+  // };
+  // const loading= false;
+
     return (
-      <header className="App-header">
+      <div className={classes.wrapper}>
         {loading ? (
           <>
             <img src={logo} className="App-logo" alt="logo" />
             <p>Loading</p>
           </>
         ) : (
-          <div>{data && data.viewer.login }</div>
+          <>
+            <div>{data && data.viewer.login}</div>
+          </>
         )}
-      </header>
+      </div>
     );
 }
 
