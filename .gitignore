@@ -19,6 +19,9 @@ Icon
 .env.development
 .env.production
 
+# Eslint
+.eslintcache
+
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd

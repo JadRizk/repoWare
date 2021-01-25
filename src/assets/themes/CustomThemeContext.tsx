@@ -1,6 +1,6 @@
-import React from "react";
-import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
-import getTheme from ".";
+import React from 'react';
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import getTheme from '.';
 
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -11,13 +11,13 @@ export const CustomThemeContext = React.createContext<{
   currentTheme: string;
   setTheme: (themeName: string) => void;
 }>({
-  currentTheme: "light",
+  currentTheme: 'light',
   setTheme: () => {},
 });
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Read current theme from localStorage
-  const currentTheme = localStorage.getItem("appTheme") || "light";
+  const currentTheme = localStorage.getItem('appTheme') || 'light';
 
   // State to hold the selected theme name
   const [themeName, _setThemeName] = React.useState(currentTheme);
@@ -27,7 +27,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   // Wrap _setThemeName to store new theme names in localStorage
   const setThemeName = (themeType: string) => {
-    localStorage.setItem("appTheme", themeType);
+    localStorage.setItem('appTheme', themeType);
     _setThemeName(themeType);
   };
 

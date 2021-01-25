@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import CustomThemeProvider from "./assets/themes/CustomThemeContext";
+import CustomThemeProvider from './assets/themes/CustomThemeContext';
 
 ReactDOM.render(
-    <CustomThemeProvider>
-      <App />
-    </CustomThemeProvider>,
-  document.getElementById("root")
+  <CustomThemeProvider>
+    <App />
+  </CustomThemeProvider>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
