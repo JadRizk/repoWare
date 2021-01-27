@@ -1,12 +1,19 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Skeleton from '@material-ui/lab/Skeleton';
+import { Typography, Container } from '@material-ui/core';
 import { useQuery, gql } from '@apollo/client';
-import logo from '../logo.svg';
+
+import SearchBar from 'components/SearchBar';
+import RepositoryList from 'components/RepoList';
 
 // Declare styles
 const useStyles = makeStyles((theme) => ({
   wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: '1rem',
     [theme.breakpoints.down('sm')]: {
       marginTop: '3rem',
@@ -14,6 +21,18 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       marginTop: '4rem',
     },
+  },
+  title: {
+    marginTop: '1rem',
+    marginBottom: '1rem',
+    textAlign: 'center',
+  },
+  skeletonWrapper: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 
@@ -34,26 +53,33 @@ const GET_USERNAME = gql`
 const Home: React.FC = () => {
   const classes = useStyles();
   const { loading, data } = useQuery<UsernameData>(GET_USERNAME);
-  // const data = {
-  //   viewer: {
-  //     login: 'JR'
-  //   }
-  // };
-  // const loading= false;
+  // const loading = true;
+
+  const [searchKey, setSearchKey] = React.useState('');
+
+  const handleOnClear = () => setSearchKey('');
 
   return (
-    <div className={classes.wrapper}>
+    <>
       {loading ? (
-        <>
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Loading</p>
-        </>
+        <div className={`${classes.skeletonWrapper} ${classes.wrapper}`}>
+          <Skeleton animation="wave" width="35%" height={80} />
+          <Skeleton animation="wave" width="80%" height={65} />
+        </div>
       ) : (
-        <>
-          <div>{data && data.viewer.login}</div>
-        </>
+        <Container className={classes.wrapper}>
+          <Typography variant={'h3'} className={classes.title}>
+            {`Welcome ${data?.viewer.login}`}
+          </Typography>
+          <SearchBar
+            value={searchKey}
+            onChange={setSearchKey}
+            onClear={handleOnClear}
+          />
+          <RepositoryList searchTerm={searchKey} />
+        </Container>
       )}
-    </div>
+    </>
   );
 };
 

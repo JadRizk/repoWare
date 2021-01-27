@@ -4,7 +4,7 @@
         "titleBar.activeForeground": "#ffffff",
         "contrastBorder": "#3e48a6"
     },
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     // turn it off for JS and JSX, we will do this via eslint
     "[javascript]": {
         "editor.formatOnSave": false

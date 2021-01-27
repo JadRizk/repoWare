@@ -2,7 +2,6 @@ import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SwitchUI from '@material-ui/core/Switch';
@@ -51,7 +50,6 @@ const App: React.FC = () => {
 
   return (
     <ApolloProvider client={client}>
-      <CssBaseline />
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
@@ -66,9 +64,7 @@ const App: React.FC = () => {
             />
           </Toolbar>
         </AppBar>
-        <main className={classes.main}>
-          <Home />
-        </main>
+        <Home />
       </div>
     </ApolloProvider>
   );
