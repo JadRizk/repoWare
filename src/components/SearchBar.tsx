@@ -1,21 +1,25 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+
 import DirectionsIcon from '@material-ui/icons/Directions';
 import CloseIcon from '@material-ui/icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
     marginTop: '1rem',
     width: '80%',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
   },
   input: {
     flex: 1,
@@ -30,16 +34,21 @@ const useStyles = makeStyles({
     height: 28,
     margin: 4,
   },
-});
+}));
 
-const SearchBar: React.FC<{
+interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   onClear: () => void;
-}> = ({ value, onChange, onClear }) => {
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, onClear }) => {
+  // Import style classes
   const classes = useStyles();
 
+  // Handles on input value change
   const handleOnChange = (event: React.ChangeEvent<{ value: string }>) => {
+    // Triggers the onChange callback
     onChange(event.target.value);
   };
 

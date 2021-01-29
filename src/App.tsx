@@ -1,14 +1,10 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import SwitchUI from '@material-ui/core/Switch';
-import Typography from '@material-ui/core/Typography';
 
 import client from './client';
-import Home from './modules/Home';
+import RepoCrawler from './modules/repoCrawler';
+import AppHeader from 'components/AppHeader';
 import { CustomThemeContext } from 'assets/themes/CustomThemeContext';
 
 import './App.css';
@@ -18,53 +14,32 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  title: {
-    flexGrow: 1,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  main: {
-    flex: 1,
-  },
 }));
 
 const App: React.FC = () => {
-  const classes = useStyles();
+  const { root } = useStyles();
+  // Use the theme context
   const { currentTheme, setTheme } = React.useContext(CustomThemeContext);
+
   const isDark = Boolean(currentTheme === 'dark');
 
   // Toggle between light and dark theme
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
-    if (checked) {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
+    // Toggle themes
+    if (checked) return setTheme('dark');
+
+    return setTheme('light');
   };
 
   return (
     <ApolloProvider client={client}>
-      <div className={classes.root}>
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-              RepoWare
-            </Typography>
-            <FormControlLabel
-              control={
-                <SwitchUI checked={isDark} onChange={handleThemeChange} />
-              }
-              label="Theme"
-            />
-          </Toolbar>
-        </AppBar>
-        <Home />
+      <div className={root}>
+        {/* This syntax is inspired from Vue. Looks kind of clean for me.
+        Let me know what you think, found out about this not to long ago */}
+        <AppHeader {...{ isDark, handleThemeChange }} />
+
+        <RepoCrawler />
       </div>
     </ApolloProvider>
   );
