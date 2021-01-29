@@ -13,11 +13,21 @@ In short, this project allows you to browse repositories available on Github usi
 
 ## Getting Started
 
----
+To get this project running locally, please follow the instructions below. It's also important to note that the app doesn't contain an authentication feature yet. Meaning you will need to generate a private personal token on GitHub and add it to the `.env` file.
 
-To get this project running locally, please follow the instructions below:
+### Steps to generate your Github personal token:
 
-```
+1. Verify your email address, if it hasn't been verified yet.
+2. In the upper-right corner of any page, click your profile photo, then click Settings.
+3. In the left sidebar, click Developer settings.
+4. In the left sidebar, click Personal access tokens.
+5. Click Generate a new token.
+6. Give your token a descriptive name.
+7. Add your token to the `.env` file (use the `.env.example` for reference)
+
+After following the steps above, please use the `.env.example` as an example to store your token.
+
+```bash
 git clone https://github.com/JadRizk/repoWare.git
 
 cd repoWare/
@@ -31,11 +41,9 @@ Open your localhost on port [3000](http://localhost:3000) to the project running
 
 ## Available Scripts
 
----
-
 Here is a list of useful scripts available:
 
-```
+```bash
 // Run the dev server locally
 yarn start -or- npm run start
 
@@ -54,11 +62,23 @@ yarn lint -or- npm run lint
 
 ## Features
 
----
+### Search Github repositories by title
 
-(Add screenShots)
+![search github repo](./docs/img/searchRepo1-light.png)
+![search github repo - result](./docs/img/searchRepo2-light.png)
 
-- Dark Mode
-- Search Github repositories
+### Dark Mode Support
+
+![search github repo](./docs/img/searchRepo1.png)
+![search github repo - result](./docs/img/searchRepo2.png)
+
+### Infinite Scroll
+
+![infinte scroll feature](./docs/img/infiniteScroll.gif)
 
 ## Roadmap
+
+- [ ] Refactor the update query to use type policies
+- [ ] Fix the 'no repo found' error. Happening when the value is being debounced
+- [ ] Optimize the card skeleton loader to display the exact amount needed to cover the screen
+- [ ]
