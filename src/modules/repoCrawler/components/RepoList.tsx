@@ -9,7 +9,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { SEARCH_FOR_REPOS } from 'modules/repoCrawler/queries';
-import { SearchRepoData, SearchRepoVars } from 'modules/repoCrawler/types';
+import {
+  RepoDetails,
+  SearchRepoData,
+  SearchRepoVars,
+} from 'modules/repoCrawler/types';
 import RepositoryItem, { SkeletonRepositoryCard } from './RepositoryItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +60,15 @@ const ScrollLoader: React.FC = () => {
   );
 };
 
-const RepositoryList: React.FC<{ searchTerm: string }> = ({ searchTerm }) => {
+interface RepositoryListProps {
+  searchTerm: string;
+  onRepoSelect: (repo: RepoDetails) => void;
+}
+
+const RepositoryList: React.FC<RepositoryListProps> = ({
+  searchTerm,
+  onRepoSelect,
+}) => {
   // Import style classes
   const classes = useStyles();
 
@@ -195,7 +207,16 @@ const RepositoryList: React.FC<{ searchTerm: string }> = ({ searchTerm }) => {
         >
           {data &&
             data.search.edges.map((repo, i) => (
-              <Grid key={repo.node.id} item xs={12} sm={6} md={4} lg={4} xl={3}>
+              <Grid
+                key={repo.node.id}
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                lg={4}
+                xl={3}
+                onClick={() => onRepoSelect(repo)}
+              >
                 <RepositoryItem
                   repo={repo}
                   expanded={expandedRepo === i}
@@ -216,60 +237,3 @@ const RepositoryList: React.FC<{ searchTerm: string }> = ({ searchTerm }) => {
 };
 
 export default RepositoryList;
-
-// const dummy: RepoDetails = {
-//   node: {
-//     id: 'MDEwOlJlcG9zaXRvcnkyMDUwNjExNDM=',
-//     name: 'kirirom-code-review-dojo',
-//     description: 'null',
-//     createdAt: '2016-12-24T13:26:25Z',
-//     languages: {
-//       totalCount: 2,
-//       edges: [
-//         {
-//           node: {
-//             id: 'MDg6TGFuZ3VhZ2U0MTc=',
-//             color: '#e34c26',
-//             name: 'HTML',
-//           },
-//         },
-//         {
-//           node: {
-//             id: 'MDg6TGFuZ3VhZ2UxNDA=',
-//             color: '#f1e05a',
-//             name: 'JavaScript',
-//           },
-//         },
-//       ],
-//     },
-//     owner: {
-//       login: 'tigerscave',
-//       avatarUrl: 'https://avatars.githubusercontent.com/u/5348007?v=4',
-//     },
-//     stargazers: {
-//       totalCount: 1,
-//     },
-//   },
-// };
-// return (
-//   <Grid container spacing={10}>
-//     <Grid item xs={12} sm={6} md={4} lg={4} xl={3}>
-//       {loading ? (
-//         <RepositoryItem
-//           expanded={false}
-//           onToggled={() => {}}
-//           key={10}
-//           isLoading
-//         />
-//       ) : (
-//         <RepositoryItem
-//           repo={dummy}
-//           expanded={false}
-//           onToggled={() => {}}
-//           key={10}
-//           isLoading
-//         />
-//       )}
-//     </Grid>
-//   </Grid>
-// );

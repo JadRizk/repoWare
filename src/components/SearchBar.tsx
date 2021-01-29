@@ -6,9 +6,9 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 
-import DirectionsIcon from '@material-ui/icons/Directions';
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
+import StarRate from '@material-ui/icons/StarRate';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,10 +39,16 @@ const useStyles = makeStyles((theme) => ({
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
+  onStarsToggle: () => void;
   onClear: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, onClear }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  value,
+  onChange,
+  onClear,
+  onStarsToggle,
+}) => {
   // Import style classes
   const classes = useStyles();
 
@@ -78,9 +84,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, onClear }) => {
       <IconButton
         color="primary"
         className={classes.iconButton}
-        aria-label="directions"
+        onClick={onStarsToggle}
+        aria-label="coming soon"
+        disabled
       >
-        <DirectionsIcon />
+        <StarRate />
       </IconButton>
     </Paper>
   );

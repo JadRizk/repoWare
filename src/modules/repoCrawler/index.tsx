@@ -9,7 +9,8 @@ import SearchBar from 'components/SearchBar';
 import RepositoryList from 'modules/repoCrawler/components/RepoList';
 
 import { GET_USERNAME } from './queries';
-import { UsernameData } from './types';
+import { RepoDetails, UsernameData } from './types';
+import IssueDialog from './components/IssueDialog';
 
 // Declare styles
 const useStyles = makeStyles((theme) => ({
@@ -60,28 +61,67 @@ const RepoCrawler: React.FC = () => {
   // Search input state
   const [searchKey, setSearchKey] = React.useState('');
 
+  const [selectedRepo, setSelectedRepo] = React.useState<{
+    repoName: string;
+    repoOwner: string;
+  } | null>(null);
+
   // Create query that fetches the username of the logged in token
   const { loading, data } = useQuery<UsernameData>(GET_USERNAME);
 
   // Handles the input clear event
   const handleOnClear = () => setSearchKey('');
 
+  // Handle repo selection from the list
+  const handleOnSelection = (repo: RepoDetails) => {
+    const {
+      node: {
+        name,
+        owner: { login },
+      },
+    } = repo;
+
+    setSelectedRepo({
+      repoName: name,
+      repoOwner: login,
+    });
+  };
+
+  const handleOnDialogClose = () => {
+    setSelectedRepo(null);
+  };
+
+  const handleStarSliderToggle = () => {
+    console.log('Feature coming soon !');
+  };
+
   // Render the view skeleton loader
   if (loading && !data) return <ViewLoader />;
 
   // Render the main repo crawler view
   return (
-    <Container className={classes.wrapper}>
-      <Typography variant={'h3'} className={classes.title}>
-        {`Welcome ${data?.viewer.login}!`}
-      </Typography>
-      <SearchBar
-        value={searchKey}
-        onChange={setSearchKey}
-        onClear={handleOnClear}
+    <>
+      <Container className={classes.wrapper}>
+        <Typography variant={'h3'} className={classes.title}>
+          {`Welcome ${data?.viewer.login}!`}
+        </Typography>
+        <SearchBar
+          value={searchKey}
+          onChange={setSearchKey}
+          onClear={handleOnClear}
+          onStarsToggle={handleStarSliderToggle}
+        />
+        <RepositoryList
+          searchTerm={searchKey}
+          onRepoSelect={handleOnSelection}
+        />
+      </Container>
+      <IssueDialog
+        isOpen={Boolean(selectedRepo)}
+        onClose={handleOnDialogClose}
+        {...selectedRepo}
       />
-      <RepositoryList searchTerm={searchKey} />
-    </Container>
+    </>
   );
 };
 

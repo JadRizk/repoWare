@@ -34,3 +34,23 @@ export interface SearchRepoVars {
   cursor: string | null;
   search_term: string;
 }
+
+export interface IssueDetails {
+  title: string;
+  bodyHTML: string;
+  createdAt: string;
+}
+
+export interface QueryIssuesData {
+  repository: {
+    issues: {
+      totalCount: number;
+      nodes: IssueDetails[];
+    };
+  };
+}
+
+export interface QueryIssuesVar {
+  name: string;
+  owner: string;
+}
