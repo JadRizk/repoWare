@@ -26,6 +26,13 @@ import {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    loadingDialog: {
+      minHeight: '100px',
+      minWidth: '100px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     issuesWrapper: {
       padding: '16px 24px',
     },
@@ -75,7 +82,7 @@ const IssueDialog: React.FC<IssueDialogProps> = ({
 }) => {
   const classes = useStyles();
 
-  const { data, loading, error } = useQuery<QueryIssuesData, QueryIssuesVar>(
+  const { data, loading } = useQuery<QueryIssuesData, QueryIssuesVar>(
     GET_REPO_ISSUES,
     {
       variables: {
@@ -85,15 +92,6 @@ const IssueDialog: React.FC<IssueDialogProps> = ({
     }
   );
 
-  if (loading)
-    return (
-      <div>
-        <CircularProgress />
-      </div>
-    );
-
-  if (error) return <div>An error has happened!</div>;
-
   return (
     <Dialog
       open={isOpen}
@@ -101,48 +99,62 @@ const IssueDialog: React.FC<IssueDialogProps> = ({
       keepMounted
       onClose={onClose}
     >
-      <DialogTitle>
-        {repoOwner}/{repoName}
-      </DialogTitle>
-
-      <div className={classes.issuesWrapper}>
-        <div className={classes.chipWrapper}>
-          <Chip
-            label={`${data?.repository.issues.totalCount} issue(s)`}
-            avatar={<BugReport />}
-          />
+      {loading && (
+        <div className={classes.loadingDialog}>
+          <CircularProgress />
         </div>
-        <Typography className={classes.contentDescription}>
-          Here is a quick list on the latest 20 issue reported:
-        </Typography>
+      )}
 
-        {data &&
-          data.repository.issues.nodes.map(
-            (issue: IssueDetails, index: number) => {
-              return (
-                <Accordion key={`${index}-accordion`}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography className={classes.heading}>
-                      {issue.title}
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: issue.bodyHTML,
-                      }}
-                    />
-                  </AccordionDetails>
-                </Accordion>
-              );
-            }
-          )}
-      </div>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Close
-        </Button>
-      </DialogActions>
+      {data && (
+        <>
+          <DialogTitle>
+            {repoOwner}/{repoName}
+          </DialogTitle>
+
+          <div className={classes.issuesWrapper}>
+            <div className={classes.chipWrapper}>
+              <Chip
+                label={`${data?.repository.issues.totalCount} issue(s)`}
+                avatar={<BugReport />}
+              />
+            </div>
+
+            {data?.repository.issues.totalCount > 0 && (
+              <Typography className={classes.contentDescription}>
+                Here is a quick list on the latest 20 issue reported:
+              </Typography>
+            )}
+
+            {data &&
+              data.repository.issues.nodes.map(
+                (issue: IssueDetails, index: number) => {
+                  return (
+                    <Accordion key={`${index}-accordion`}>
+                      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography className={classes.heading}>
+                          {issue.title}
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: issue.bodyHTML,
+                          }}
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  );
+                }
+              )}
+          </div>
+
+          <DialogActions>
+            <Button onClick={onClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </>
+      )}
     </Dialog>
   );
 };

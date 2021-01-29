@@ -12,8 +12,6 @@ import RepoCrawler from './modules/repoCrawler';
 import AppHeader from 'components/AppHeader';
 import { CustomThemeContext } from 'assets/themes/CustomThemeContext';
 
-import './App.css';
-
 const App: React.FC = () => {
   // Use the theme context
   const { currentTheme, setTheme } = React.useContext(CustomThemeContext);

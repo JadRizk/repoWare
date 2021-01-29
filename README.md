@@ -86,7 +86,7 @@ yarn lint -or- npm run lint
 
 - [ ] Fix the 'no repo found' error. Happening when the value is being debounced
 - [ ] When scrolling for more repos and issues concerning duplicate keys is being displayed (Investigate)
-- [ ] Handle Loading and error state in issueDialog (Enhancements)
+- [ ] Handle error state in issueDialog (Enhancements)
 
 ### Optimizations
 
