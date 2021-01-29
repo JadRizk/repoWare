@@ -67,6 +67,10 @@ yarn lint -or- npm run lint
 ![search github repo](./docs/img/searchRepo1-light.png)
 ![search github repo - result](./docs/img/searchRepo2-light.png)
 
+### List the 20 latest issues
+
+![latest-feature](./docs/img/issuesFeature.png)
+
 ### Dark Mode Support
 
 ![search github repo](./docs/img/searchRepo1.png)
@@ -78,7 +82,24 @@ yarn lint -or- npm run lint
 
 ## Roadmap
 
-- [ ] Refactor the update query to use type policies
+### Bug fixes
+
 - [ ] Fix the 'no repo found' error. Happening when the value is being debounced
-- [ ] Optimize the card skeleton loader to display the exact amount needed to cover the screen
-- [ ]
+- [ ] When scrolling for more repos and issues concerning duplicate keys is being displayed (Investigate)
+- [ ] Handle Loading and error state in issueDialog (Enhancements)
+
+### Optimizations
+
+- [ ] Refactor the update query to use type policies
+- [ ] Optimize the card skeleton loader to display the amount needed to cover the screen
+- [ ] Replace material-ui classes by styles-components
+
+### Future Features
+
+- [ ] ADD AUTOMATED TESTS !
+
+- [ ] Add user authentication using Github REST API (we can get the token and then use it to query the graphql endpoint)
+- [ ] Add a feature to allow the user to star or watch repos from the app (Use optimistic UI)
+- [ ] Add Infinite Scroll for the issues list
+- [ ] Add the option to filter by a minimum amount of stars
+- [ ] Add a view to display the top 10 repos for specific languages

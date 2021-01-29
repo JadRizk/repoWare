@@ -14,10 +14,15 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BugReport from '@material-ui/icons/BugReport';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 
 import { GET_REPO_ISSUES } from 'modules/repoCrawler/queries';
-import { IssueDetails, QueryIssuesData, QueryIssuesVar } from '../types';
+import {
+  IssueDetails,
+  QueryIssuesData,
+  QueryIssuesVar,
+} from 'modules/repoCrawler/types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,9 +85,14 @@ const IssueDialog: React.FC<IssueDialogProps> = ({
     }
   );
 
-  if (loading) return <div>Loading</div>;
+  if (loading)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
 
-  if (error) return <div>Error</div>;
+  if (error) return <div>An error has happened!</div>;
 
   return (
     <Dialog
