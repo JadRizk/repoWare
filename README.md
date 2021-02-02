@@ -1,5 +1,7 @@
 # RepoWare
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1006624a-4c6e-4ce6-b217-1df588b3e388/deploy-status)](https://app.netlify.com/sites/confident-almeida-f0b35b/deploys)
+
 A simple react client for Github's graphQL API 🚀
 
 In short, this project allows you to browse repositories available on Github using an infinite scroll. It uses the new Github GraphQL v4 and well the new `apollo/client` library.
